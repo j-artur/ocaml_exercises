@@ -26,8 +26,8 @@ let rec last (list : 'a list) : 'a option =
   | _ :: tail -> last tail
 ;;
 
-assert_eq (last []) None;;
-assert_eq (last [ "a"; "b"; "c" ]) (Some "c")
+assert_eq (last [ "a"; "b"; "c"; "d" ]) (Some "d");;
+assert_eq (last []) None
 
 (* 2. Last Two Elements of a List *)
 
@@ -38,9 +38,20 @@ let rec last_two (list : 'a list) : ('a * 'a) option =
   | _ :: tail -> last_two tail
 ;;
 
-assert_eq (last_two []) None;;
-assert_eq (last_two [ 1 ]) None;;
-assert_eq (last_two [ 1; 2; 3; 4 ]) (Some (3, 4))
+assert_eq (last_two [ "a"; "b"; "c"; "d" ]) (Some ("c", "d"));;
+assert_eq (last_two [ "a" ]) None
+
+(* 3. N'th Element of a List *)
+
+let rec at n list =
+  match n, list with
+  | _, [] -> None
+  | 0, head :: _ -> Some head
+  | n, _ :: tail -> at (n - 1) tail
+;;
+
+assert_eq (at 2 [ "a"; "b"; "c"; "d"; "e" ]) (Some "c");;
+assert_eq (at 2 [ "a" ]) None
 
 (* results *)
 
