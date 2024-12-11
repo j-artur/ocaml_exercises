@@ -53,6 +53,16 @@ let rec at n list =
 assert_eq (at 2 [ "a"; "b"; "c"; "d"; "e" ]) (Some "c");;
 assert_eq (at 2 [ "a" ]) None
 
+(* 4. Length of a List *)
+
+let rec length = function
+  | [] -> 0
+  | _ :: tail -> length tail + 1
+;;
+
+assert_eq (length [ "a"; "b"; "c" ]) 3;;
+assert_eq (length []) 0
+
 (* results *)
 
 let () = printf "%d tests, %d passed and %d failed\n" !tests !passed !failed
