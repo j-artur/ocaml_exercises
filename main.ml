@@ -17,11 +17,17 @@ let assert_eq (a : 'a) (b : 'a) : unit =
     eprintf "test %d failed\n" !tests)
 ;;
 
-(* tests *)
+(* 1. Tail of a List *)
 
-assert_eq "" "";;
-assert_eq 1 1;;
-assert_eq (1, 2) (3 - 2, 5 - 3)
+let rec last (list : 'a list) : 'a option =
+  match list with
+  | [] -> None
+  | [ e ] -> Some e
+  | _ :: tail -> last tail
+;;
+
+assert_eq (last []) None;;
+assert_eq (last [ "a"; "b"; "c" ]) (Some "c")
 
 (* results *)
 
