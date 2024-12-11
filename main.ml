@@ -29,6 +29,19 @@ let rec last (list : 'a list) : 'a option =
 assert_eq (last []) None;;
 assert_eq (last [ "a"; "b"; "c" ]) (Some "c")
 
+(* 2. Last Two Elements of a List *)
+
+let rec last_two (list : 'a list) : ('a * 'a) option =
+  match list with
+  | [] | [ _ ] -> None
+  | [ x; y ] -> Some (x, y)
+  | _ :: tail -> last_two tail
+;;
+
+assert_eq (last_two []) None;;
+assert_eq (last_two [ 1 ]) None;;
+assert_eq (last_two [ 1; 2; 3; 4 ]) (Some (3, 4))
+
 (* results *)
 
 let () = printf "%d tests, %d passed and %d failed\n" !tests !passed !failed
