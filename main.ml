@@ -63,6 +63,19 @@ let rec length = function
 assert_eq (length [ "a"; "b"; "c" ]) 3;;
 assert_eq (length []) 0
 
+(* 5. Reverse a List *)
+
+let rec rev list =
+  let rec rev_help list acc =
+    match list with
+    | [] -> acc
+    | hd :: tail -> rev_help tail (hd :: acc)
+  in
+  rev_help list []
+;;
+
+assert_eq (rev [ "a"; "b"; "c" ]) [ "c"; "b"; "a" ]
+
 (* results *)
 
 let () = printf "%d tests, %d passed and %d failed\n" !tests !passed !failed
