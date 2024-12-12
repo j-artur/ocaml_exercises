@@ -76,6 +76,21 @@ let rec rev list =
 
 assert_eq (rev [ "a"; "b"; "c" ]) [ "c"; "b"; "a" ]
 
+(* 6. Palindrome *)
+
+let is_palindrome list =
+  let rec is_palindrome_help list rev_list =
+    match list, rev_list with
+    | [], [] -> true
+    | hd1 :: tail1, hd2 :: tail2 when hd1 = hd2 -> is_palindrome_help tail1 tail2
+    | _ -> false
+  in
+  is_palindrome_help list (rev list)
+;;
+
+assert_eq (is_palindrome [ "x"; "a"; "m"; "a"; "x" ]) true;;
+assert_eq (not (is_palindrome [ "a"; "b" ])) true
+
 (* results *)
 
 let () = printf "%d tests, %d passed and %d failed\n" !tests !passed !failed
