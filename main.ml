@@ -91,6 +91,22 @@ let is_palindrome list =
 assert_eq (is_palindrome [ "x"; "a"; "m"; "a"; "x" ]) true;;
 assert_eq (not (is_palindrome [ "a"; "b" ])) true
 
+(* 7. Flatten a List *)
+
+type 'a node =
+  | One of 'a
+  | Many of 'a node list
+
+let rec flatten = function
+  | One el :: tail -> el :: flatten tail
+  | Many els :: tail -> List.concat [ flatten els; flatten tail ]
+  | [] -> []
+;;
+
+assert_eq
+  (flatten [ One "a"; Many [ One "b"; Many [ One "c"; One "d" ]; One "e" ] ])
+  [ "a"; "b"; "c"; "d"; "e" ]
+
 (* results *)
 
 let () = printf "%d tests, %d passed and %d failed\n" !tests !passed !failed
