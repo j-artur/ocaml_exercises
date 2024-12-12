@@ -107,6 +107,17 @@ assert_eq
   (flatten [ One "a"; Many [ One "b"; Many [ One "c"; One "d" ]; One "e" ] ])
   [ "a"; "b"; "c"; "d"; "e" ]
 
+(* 8. Eliminate Duplicates *)
+
+let rec compress = function
+  | a :: b :: rest -> if a = b then compress (b :: rest) else a :: compress (b :: rest)
+  | a -> a
+;;
+
+assert_eq
+  (compress [ "a"; "a"; "a"; "a"; "b"; "c"; "c"; "a"; "a"; "d"; "e"; "e"; "e"; "e" ])
+  [ "a"; "b"; "c"; "a"; "d"; "e" ]
+
 (* results *)
 
 let () = printf "%d tests, %d passed and %d failed\n" !tests !passed !failed
