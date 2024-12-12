@@ -85,7 +85,7 @@ let is_palindrome list =
     | hd1 :: tail1, hd2 :: tail2 when hd1 = hd2 -> is_palindrome_help tail1 tail2
     | _ -> false
   in
-  is_palindrome_help list (rev list)
+  is_palindrome_help list (List.rev list)
 ;;
 
 assert_eq (is_palindrome [ "x"; "a"; "m"; "a"; "x" ]) true;;
@@ -117,6 +117,31 @@ let rec compress = function
 assert_eq
   (compress [ "a"; "a"; "a"; "a"; "b"; "c"; "c"; "a"; "a"; "d"; "e"; "e"; "e"; "e" ])
   [ "a"; "b"; "c"; "a"; "d"; "e" ]
+
+(* 9. Pack Consecutive Duplicates *)
+
+let rec pack list =
+  let rec pack_help list pack acc =
+    match list, pack with
+    | a :: tail, [] -> pack_help tail [ a ] acc
+    | a :: tail, b :: pack ->
+      if a = b
+      then pack_help tail (a :: b :: pack) acc
+      else pack_help tail [ a ] ((b :: pack) :: acc)
+    | [], pack -> List.rev (pack :: acc)
+  in
+  pack_help list [] []
+;;
+
+assert_eq
+  (pack [ "a"; "a"; "a"; "a"; "b"; "c"; "c"; "a"; "a"; "d"; "d"; "e"; "e"; "e"; "e" ])
+  [ [ "a"; "a"; "a"; "a" ]
+  ; [ "b" ]
+  ; [ "c"; "c" ]
+  ; [ "a"; "a" ]
+  ; [ "d"; "d" ]
+  ; [ "e"; "e"; "e"; "e" ]
+  ]
 
 (* results *)
 
